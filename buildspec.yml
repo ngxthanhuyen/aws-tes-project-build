@@ -1,0 +1,30 @@
+phases:
+  install:
+    runtime-version:
+      python: 3.8
+    commands:
+      -echo Installing dependencies...
+      -pip install -r requirements.txt
+
+  pre_build:
+    commands:
+      - echo Running pre-build steps...
+
+  build:
+    commands:
+      - echo Running unit tests with pytest...
+      - pytest --junitxml=reports/results.xml --tb=short
+
+  post_build:
+    commands:
+      - echo Build completed successfully!
+      
+  artifacts:
+    files:
+      - '**/*' # copier tous les fichiers du projet
+    base-directory: .
+  reports:
+    pytest-reports:
+      files:
+        - 'reports/results.xml' # chemin vers le rapport de test généré par pytest
+      discard-paths: yes
